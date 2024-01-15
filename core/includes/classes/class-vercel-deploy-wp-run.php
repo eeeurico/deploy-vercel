@@ -4,21 +4,21 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class Wp_Vercel_Deploy_Run
+ * Class Vercel_Deploy_WP_Run
  *
  * Thats where we bring the plugin to life
  *
- * @package		WVD
- * @subpackage	Classes/Wp_Vercel_Deploy_Run
+ * @package		VDWP
+ * @subpackage	Classes/Vercel_Deploy_WP_Run
  * @author		Eurico Sá Fernandes
  * @since		1.0.0
  */
-class Wp_Vercel_Deploy_Run{
+class Vercel_Deploy_WP_Run{
 
 
 
 	/**
-	 * Our Wp_Vercel_Deploy_Run constructor 
+	 * Our Vercel_Deploy_WP_Run constructor 
 	 * to run the plugin logic.
 	 *
 	 * @since 1.0.0
@@ -68,10 +68,10 @@ class Wp_Vercel_Deploy_Run{
 	 * @return	void
 	 */
 	public function enqueue_backend_scripts_and_styles() {
-		wp_enqueue_style( 'wvd-backend-styles', WVD_PLUGIN_URL . 'core/includes/assets/css/backend-styles.css', array(), WVD_VERSION, 'all' );
-		wp_enqueue_script( 'wvd-backend-scripts', WVD_PLUGIN_URL . 'core/includes/assets/js/backend-scripts.js', array(), WVD_VERSION, false );
+		wp_enqueue_style( 'wvd-backend-styles', VDWP_PLUGIN_URL . 'core/includes/assets/css/backend-styles.css', array(), VDWP_VERSION, 'all' );
+		wp_enqueue_script( 'wvd-backend-scripts', VDWP_PLUGIN_URL . 'core/includes/assets/js/backend-scripts.js', array(), VDWP_VERSION, false );
 		wp_localize_script( 'wvd-backend-scripts', 'wvd', array(
-			'plugin_name'   	=> __( WVD_NAME, 'wp-vercel-deploy' ),
+			'plugin_name'   	=> __( VDWP_NAME, 'vercel-deploy-wp' ),
 		));
 	}
 
@@ -82,8 +82,8 @@ class Wp_Vercel_Deploy_Run{
 	 */
 	public function register_admin_page(){
 		add_menu_page(
-			__( 'Vercel Deploy', 'wp-vercel-deploy' ),
-			__( 'Vercel Deploy', 'wp-vercel-deploy' ),
+			__( 'Vercel Deploy', 'vercel-deploy-wp' ),
+			__( 'Vercel Deploy', 'vercel-deploy-wp' ),
 			'manage_options',
 			'vercel-deploy',
 			[ $this, 'render_verceldeploy_admin_page' ],
@@ -97,7 +97,7 @@ class Wp_Vercel_Deploy_Run{
 	 * @return void
 	 */
 	public function render_verceldeploy_admin_page() {
-		$admin_page_title = __( 'Vercel Deploy', 'wp-vercel-deploy' );
+		$admin_page_title = __( 'Vercel Deploy', 'vercel-deploy-wp' );
 		$settings_api = get_option( 'vercel_deploy_settings' );
 		?>
 		<div class="wrap">

@@ -4,17 +4,17 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class Wp_Vercel_Deploy_Settings
+ * Class Vercel_Deploy_WP_Settings
  *
  * This class contains all of the plugin settings.
  * Here you can configure the whole plugin data.
  *
- * @package		WVD
- * @subpackage	Classes/Wp_Vercel_Deploy_Settings
+ * @package		VDWP
+ * @subpackage	Classes/Vercel_Deploy_WP_Settings
  * @author		Eurico Sá Fernandes
  * @since		1.0.0
  */
-class Wp_Vercel_Deploy_Settings{
+class Vercel_Deploy_WP_Settings{
 
 	/*
 	 * The settings api
@@ -33,13 +33,13 @@ class Wp_Vercel_Deploy_Settings{
 	private $plugin_name;
 
 	/**
-	 * Our Wp_Vercel_Deploy_Settings constructor 
+	 * Our Vercel_Deploy_WP_Settings constructor 
 	 * to run the plugin logic.
 	 *
 	 * @since 1.0.0
 	 */
 	function __construct(){
-		$this->plugin_name = WVD_NAME;
+		$this->plugin_name = VDWP_NAME;
 		$this->settings_api = get_option( 'vercel_deploy_settings' );
 		$this->add_hooks();
 	}
@@ -73,7 +73,7 @@ class Wp_Vercel_Deploy_Settings{
 	 * @return	string The plugin name
 	 */
 	public function get_plugin_name(){
-		return apply_filters( 'WVD/settings/get_plugin_name', $this->plugin_name );
+		return apply_filters( 'VDWP/settings/get_plugin_name', $this->plugin_name );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class Wp_Vercel_Deploy_Settings{
 	 * @return	string The plugin name
 	 */
 	public function get_plugin_settings(){
-		return apply_filters( 'WVD/settings/get_plugin_settings', $this->settings_api );
+		return apply_filters( 'VDWP/settings/get_plugin_settings', $this->settings_api );
 	}
 
 	
@@ -96,8 +96,8 @@ class Wp_Vercel_Deploy_Settings{
 	public function add_options_page() {
 		add_submenu_page(
 			'vercel-deploy',
-			__( 'Vercel Deploy Settings', 'wp-vercel-deploy' ),
-			__( 'Settings', 'wp-vercel-deploy' ),
+			__( 'Vercel Deploy Settings', 'vercel-deploy-wp' ),
+			__( 'Settings', 'vercel-deploy-wp' ),
 			'manage_options',
 			'vercel-deploy-settings',
 			[ $this, 'render_settings_page' ]
@@ -142,55 +142,55 @@ class Wp_Vercel_Deploy_Settings{
 
 		add_settings_section(
 			'vercel_deploy_settings_section', // id
-			__( 'Vercel Deploy Settings', 'wp-vercel-deploy' ), // title
+			__( 'Vercel Deploy Settings', 'vercel-deploy-wp' ), // title
 			array( $this, 'vercel_deploy_settings_section_info' ), // callback
 			'vercel-deploy-settings-admin' // page
 		);
 
 		add_settings_field(
 			'deploy_hook', // id
-			__('Deploy Hook', 'wp-vercel-deploy'), // title
+			__('Deploy Hook', 'vercel-deploy-wp'), // title
 			array( $this, 'textinput_callback' ), // callback
 			'vercel-deploy-settings-admin', // page
 			'vercel_deploy_settings_section', // section
 			array(
-				'description'  => __( 'Learn more about <a href="https://vercel.com/docs/git/deploy-hooks" target="_blank">Vercel Deploy Hooks</a>.', 'wp-vercel-deploy' ),
+				'description'  => __( 'Learn more about <a href="https://vercel.com/docs/git/deploy-hooks" target="_blank">Vercel Deploy Hooks</a>.', 'vercel-deploy-wp' ),
 				'id' => 'deploy_hook',
 			)
 		);
 
 		add_settings_field(
 			'api_token', // id
-			__('API token', 'wp-vercel-deploy'), // title
+			__('API token', 'vercel-deploy-wp'), // title
 			array( $this, 'textinput_callback' ), // callback
 			'vercel-deploy-settings-admin', // page
 			'vercel_deploy_settings_section', // section,
 			array(
-				'description'  => __( 'Access tokens can be created and managed inside your <a href="https://vercel.com/account/tokens" target="_blank">account settings</a>.', 'wp-vercel-deploy' ),
+				'description'  => __( 'Access tokens can be created and managed inside your <a href="https://vercel.com/account/tokens" target="_blank">account settings</a>.', 'vercel-deploy-wp' ),
 				'id' => 'api_token',
 			)
 		);
 
 		add_settings_field(
 			'app_name', // id
-			__('App Name', 'wp-vercel-deploy'), // title
+			__('App Name', 'vercel-deploy-wp'), // title
 			array( $this, 'textinput_callback' ), // callback
 			'vercel-deploy-settings-admin', // page
 			'vercel_deploy_settings_section', // section
 			array(
-				'description'  => __( 'Set the name of your <a href="https://vercel.com/dashboard" target="_blank">Vercel App</a> to see only the deployments you need', 'wp-vercel-deploy' ),
+				'description'  => __( 'Set the name of your <a href="https://vercel.com/dashboard" target="_blank">Vercel App</a> to see only the deployments you need', 'vercel-deploy-wp' ),
 				'id' => 'app_name',
 			)
 		);
 
 		add_settings_field(
 			'team_id', // id
-			__('Team ID', 'wp-vercel-deploy'), // title
+			__('Team ID', 'vercel-deploy-wp'), // title
 			array( $this, 'textinput_callback'), // callback
 			'vercel-deploy-settings-admin', // page
 			'vercel_deploy_settings_section', // section
 			array(
-				'description'  => __( 'Set the id of your <a href="https://vercel.com/dashboard" target="_blank">Vercel Team</a> to see only the deployments you need', 'wp-vercel-deploy' ),
+				'description'  => __( 'Set the id of your <a href="https://vercel.com/dashboard" target="_blank">Vercel Team</a> to see only the deployments you need', 'vercel-deploy-wp' ),
 				'id' => 'team_id',
 			)
 		);
@@ -218,7 +218,7 @@ class Wp_Vercel_Deploy_Settings{
 	}
 
 	public function vercel_deploy_settings_section_info() {
-		echo __( 'Enter your settings below:', 'wp-vercel-deploy' );
+		echo __( 'Enter your settings below:', 'vercel-deploy-wp' );
 	}
 
 	public function textinput_callback( $args ) {

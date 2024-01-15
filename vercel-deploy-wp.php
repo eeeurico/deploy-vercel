@@ -1,52 +1,52 @@
 <?php
 /**
- * WP Vercel Deploy
+ * Vercel Deploy WP
  *
- * @package       WVD
+ * @package       VDWP
  * @author        Eurico Sá Fernandes
  * @license       gplv2
  * @version       1.0.0
  *
  * @wordpress-plugin
- * Plugin Name:   WP Vercel Deploy
- * Plugin URI:    https://github.com/eeeurico/wp-vercel-deploy
+ * Plugin Name:   Vercel Deploy WP
+ * Plugin URI:    https://github.com/eeeurico/vercel-deploy-wp
  * Description:   Wordpress plugin to trigger and monitor a development on Vercel
  * Version:       1.0.0
  * Author:        Eurico Sá Fernandes
  * Author URI:    https://github.com/eeeurico
- * Text Domain:   wp-vercel-deploy
+ * Text Domain:   vercel-deploy-wp
  * Domain Path:   /languages
  * License:       GPLv2
  * License URI:   https://www.gnu.org/licenses/gpl-2.0.html
  *
  * You should have received a copy of the GNU General Public License
- * along with WP Vercel Deploy. If not, see <https://www.gnu.org/licenses/gpl-2.0.html/>.
+ * along with Vercel Deploy WP. If not, see <https://www.gnu.org/licenses/gpl-2.0.html/>.
  */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 // Plugin name
-define( 'WVD_NAME',			'WP Vercel Deploy' );
+define( 'VDWP_NAME',			'Vercel Deploy WP' );
 
 // Plugin version
-define( 'WVD_VERSION',		'1.0.0' );
+define( 'VDWP_VERSION',		'1.0.0' );
 
 // Plugin Root File
-define( 'WVD_PLUGIN_FILE',	__FILE__ );
+define( 'VDWP_PLUGIN_FILE',	__FILE__ );
 
 // Plugin base
-define( 'WVD_PLUGIN_BASE',	plugin_basename( WVD_PLUGIN_FILE ) );
+define( 'VDWP_PLUGIN_BASE',	plugin_basename( VDWP_PLUGIN_FILE ) );
 
 // Plugin Folder Path
-define( 'WVD_PLUGIN_DIR',	plugin_dir_path( WVD_PLUGIN_FILE ) );
+define( 'VDWP_PLUGIN_DIR',	plugin_dir_path( VDWP_PLUGIN_FILE ) );
 
 // Plugin Folder URL
-define( 'WVD_PLUGIN_URL',	plugin_dir_url( WVD_PLUGIN_FILE ) );
+define( 'VDWP_PLUGIN_URL',	plugin_dir_url( VDWP_PLUGIN_FILE ) );
 
 /**
  * Load the main class for the core functionality
  */
-require_once WVD_PLUGIN_DIR . 'core/class-wp-vercel-deploy.php';
+require_once VDWP_PLUGIN_DIR . 'core/class-vercel-deploy-wp.php';
 
 /**
  * The main function to load the only instance
@@ -54,10 +54,10 @@ require_once WVD_PLUGIN_DIR . 'core/class-wp-vercel-deploy.php';
  *
  * @author  Eurico Sá Fernandes
  * @since   1.0.0
- * @return  object|Wp_Vercel_Deploy
+ * @return  object|Vercel_Deploy_WP
  */
-function WVD() {
-	return Wp_Vercel_Deploy::instance();
+function VDWP() {
+	return Vercel_Deploy_WP::instance();
 }
 
-WVD();
+VDWP();

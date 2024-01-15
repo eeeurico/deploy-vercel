@@ -4,17 +4,17 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class Wp_Vercel_Deploy_Helpers
+ * Class Vercel_Deploy_WP_Helpers
  *
  * This class contains repetitive functions that
  * are used globally within the plugin.
  *
- * @package		WVD
- * @subpackage	Classes/Wp_Vercel_Deploy_Helpers
+ * @package		VDWP
+ * @subpackage	Classes/Vercel_Deploy_WP_Helpers
  * @author		Eurico Sá Fernandes
  * @since		1.0.0
  */
-class Wp_Vercel_Deploy_Helpers{
+class Vercel_Deploy_WP_Helpers{
 
 	/**
 	 * ######################
