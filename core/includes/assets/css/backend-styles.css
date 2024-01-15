@@ -1,0 +1,112 @@
+/*----------------- 
+Backend related CSS
+-----------------*/
+
+vercel-deploy-app {
+  display: block;
+  width: 100%;
+}
+
+/* Header */
+vercel-deploy-app .vercel-deploy__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+vercel-deploy-app .vercel-deploy__actions {
+}
+
+/* Content */
+vercel-deploy-app .vercel-deploy__content {
+  display: block;
+  width: 100%;
+}
+
+/* Table */
+vercel-deploy-app .table-wrap {
+  width: 100%;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  display: block;
+}
+vercel-deploy-app table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 0;
+  background: #fff;
+}
+
+vercel-deploy-app thead {
+  background-color: #1d2327;
+  color: #fff;
+  font-weight: 400;
+}
+vercel-deploy-app thead th:first-child {
+  width: 40%;
+}
+
+vercel-deploy-app thead th:last-child {
+  width: 60px;
+}
+
+vercel-deploy-app tbody tr {
+  border-bottom: 1px solid #e6e6e6;
+}
+vercel-deploy-app th,
+vercel-deploy-app td {
+  text-align: left;
+  padding: 16px;
+}
+
+vercel-deploy-app .status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+vercel-deploy-app .status:before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: #ccc;
+}
+
+vercel-deploy-app .status--READY:before {
+  background: #4caf50;
+}
+vercel-deploy-app .status--ERROR:before,
+vercel-deploy-app .status--CANCELED:before {
+  background: #f44336;
+}
+vercel-deploy-app .status--QUEUED:before {
+  background: #ffc107;
+}
+vercel-deploy-app .status--BUILDING:before {
+  background: #2196f3;
+}
+
+vercel-deploy-app .actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+vercel-deploy-app .actions a {
+  text-decoration: none;
+  padding: 0.15rem;
+  background: transparent;
+  border-radius: 0.25rem;
+  border: 1px solid #e6e6e6;
+  color: #1d2327;
+}
+
+vercel-deploy-app .actions a:hover {
+  background: #1d2327;
+  color: #fff;
+  border-color: #1d2327;
+}
