@@ -2,24 +2,24 @@
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
-if ( ! class_exists( 'Vercel_Deploy_WP' ) ) :
+if ( ! class_exists( 'Deploy_Vercel' ) ) :
 
 	/**
-	 * Main Vercel_Deploy_WP Class.
+	 * Main Deploy_Vercel Class.
 	 *
 	 * @package		VDWP
-	 * @subpackage	Classes/Vercel_Deploy_WP
+	 * @subpackage	Classes/Deploy_Vercel
 	 * @since		1.0.0
 	 * @author		Eurico Sá Fernandes
 	 */
-	final class Vercel_Deploy_WP {
+	final class Deploy_Vercel {
 
 		/**
 		 * The real instance
 		 *
 		 * @access	private
 		 * @since	1.0.0
-		 * @var		object|Vercel_Deploy_WP
+		 * @var		object|Deploy_Vercel
 		 */
 		private static $instance;
 
@@ -28,7 +28,7 @@ if ( ! class_exists( 'Vercel_Deploy_WP' ) ) :
 		 *
 		 * @access	public
 		 * @since	1.0.0
-		 * @var		object|Vercel_Deploy_WP_Helpers
+		 * @var		object|Deploy_Vercel_Helpers
 		 */
 		public $helpers;
 
@@ -37,7 +37,7 @@ if ( ! class_exists( 'Vercel_Deploy_WP' ) ) :
 		 *
 		 * @access	public
 		 * @since	1.0.0
-		 * @var		object|Vercel_Deploy_WP_Settings
+		 * @var		object|Deploy_Vercel_Settings
 		 */
 		public $settings;
 
@@ -51,7 +51,7 @@ if ( ! class_exists( 'Vercel_Deploy_WP' ) ) :
 		 * @return	void
 		 */
 		public function __clone() {
-			_doing_it_wrong( __FUNCTION__, __( 'You are not allowed to clone this class.', 'vercel-deploy-wp' ), '1.0.0' );
+			_doing_it_wrong( __FUNCTION__, __( 'You are not allowed to clone this class.', 'deploy-vercel' ), '1.0.0' );
 		}
 
 		/**
@@ -62,30 +62,30 @@ if ( ! class_exists( 'Vercel_Deploy_WP' ) ) :
 		 * @return	void
 		 */
 		public function __wakeup() {
-			_doing_it_wrong( __FUNCTION__, __( 'You are not allowed to unserialize this class.', 'vercel-deploy-wp' ), '1.0.0' );
+			_doing_it_wrong( __FUNCTION__, __( 'You are not allowed to unserialize this class.', 'deploy-vercel' ), '1.0.0' );
 		}
 
 		/**
-		 * Main Vercel_Deploy_WP Instance.
+		 * Main Deploy_Vercel Instance.
 		 *
-		 * Insures that only one instance of Vercel_Deploy_WP exists in memory at any one
+		 * Insures that only one instance of Deploy_Vercel exists in memory at any one
 		 * time. Also prevents needing to define globals all over the place.
 		 *
 		 * @access		public
 		 * @since		1.0.0
 		 * @static
-		 * @return		object|Vercel_Deploy_WP	The one true Vercel_Deploy_WP
+		 * @return		object|Deploy_Vercel	The one true Deploy_Vercel
 		 */
 		public static function instance() {
-			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Vercel_Deploy_WP ) ) {
-				self::$instance					= new Vercel_Deploy_WP;
+			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Deploy_Vercel ) ) {
+				self::$instance					= new Deploy_Vercel;
 				self::$instance->base_hooks();
 				self::$instance->includes();
-				self::$instance->helpers		= new Vercel_Deploy_WP_Helpers();
-				self::$instance->settings		= new Vercel_Deploy_WP_Settings();
+				self::$instance->helpers		= new Deploy_Vercel_Helpers();
+				self::$instance->settings		= new Deploy_Vercel_Settings();
 
 				//Fire the plugin logic
-				new Vercel_Deploy_WP_Run();
+				new Deploy_Vercel_Run();
 
 				/**
 				 * Fire a custom action to allow dependencies
@@ -105,10 +105,10 @@ if ( ! class_exists( 'Vercel_Deploy_WP' ) ) :
 		 * @return  void
 		 */
 		private function includes() {
-			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-vercel-deploy-wp-helpers.php';
-			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-vercel-deploy-wp-settings.php';
+			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-deploy-vercel-helpers.php';
+			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-deploy-vercel-settings.php';
 
-			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-vercel-deploy-wp-run.php';
+			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-deploy-vercel-run.php';
 		}
 
 		/**
@@ -130,7 +130,7 @@ if ( ! class_exists( 'Vercel_Deploy_WP' ) ) :
 		 * @return  void
 		 */
 		public function load_textdomain() {
-			load_plugin_textdomain( 'vercel-deploy-wp', FALSE, dirname( plugin_basename( VDWP_PLUGIN_FILE ) ) . '/languages/' );
+			load_plugin_textdomain( 'deploy-vercel', FALSE, dirname( plugin_basename( VDWP_PLUGIN_FILE ) ) . '/languages/' );
 		}
 
 	}

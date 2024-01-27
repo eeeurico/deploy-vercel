@@ -4,21 +4,21 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class Vercel_Deploy_WP_Run
+ * Class Deploy_Vercel_Run
  *
  * Thats where we bring the plugin to life
  *
  * @package		VDWP
- * @subpackage	Classes/Vercel_Deploy_WP_Run
+ * @subpackage	Classes/Deploy_Vercel_Run
  * @author		Eurico Sá Fernandes
  * @since		1.0.0
  */
-class Vercel_Deploy_WP_Run{
+class Deploy_Vercel_Run{
 
 
 
 	/**
-	 * Our Vercel_Deploy_WP_Run constructor 
+	 * Our Deploy_Vercel_Run constructor 
 	 * to run the plugin logic.
 	 *
 	 * @since 1.0.0
@@ -71,7 +71,7 @@ class Vercel_Deploy_WP_Run{
 		wp_enqueue_style( 'wvd-backend-styles', VDWP_PLUGIN_URL . 'core/includes/assets/css/backend-styles.css', array(), VDWP_VERSION, 'all' );
 		wp_enqueue_script( 'wvd-backend-scripts', VDWP_PLUGIN_URL . 'core/includes/assets/js/backend-scripts.js', array(), VDWP_VERSION, false );
 		wp_localize_script( 'wvd-backend-scripts', 'wvd', array(
-			'plugin_name'   	=> __( VDWP_NAME, 'vercel-deploy-wp' ),
+			'plugin_name'   	=> __( VDWP_NAME, 'deploy-vercel' ),
 		));
 	}
 
@@ -82,8 +82,8 @@ class Vercel_Deploy_WP_Run{
 	 */
 	public function register_admin_page(){
 		add_menu_page(
-			__( 'Vercel Deploy', 'vercel-deploy-wp' ),
-			__( 'Vercel Deploy', 'vercel-deploy-wp' ),
+			__( 'Vercel Deploy', 'deploy-vercel' ),
+			__( 'Vercel Deploy', 'deploy-vercel' ),
 			'manage_options',
 			'vercel-deploy',
 			[ $this, 'render_verceldeploy_admin_page' ],
@@ -97,7 +97,7 @@ class Vercel_Deploy_WP_Run{
 	 * @return void
 	 */
 	public function render_verceldeploy_admin_page() {
-		$admin_page_title = __( 'Vercel Deploy', 'vercel-deploy-wp' );
+		$admin_page_title = __( 'Vercel Deploy', 'deploy-vercel' );
 		$settings_api = get_option( 'vercel_deploy_settings' );
 		?>
 		<div class="wrap">

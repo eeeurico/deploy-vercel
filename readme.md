@@ -1,4 +1,4 @@
-# Vercel Deploy WP
+# Deploy to Vercel
 
 Wordpress plugin to trigger and monitor a deployment on [Vercel](https://vercel.com/).
 
@@ -8,7 +8,7 @@ Inspired by [Vercel Deploy for Strapi](https://market.strapi.io/plugins/strapi-p
 
 1. Go to `Plugins` in the Admin menu
 2. Click on the button `Add new`
-3. Search for `Vercel Deploy WP` and click 'Install Now' or click on the `upload` link to upload `vercel-deploy-wp.zip`
+3. Search for `Deploy to Vercel` and click 'Install Now' or click on the `upload` link to upload `deploy-vercel.zip`
 4. Click on `Activate plugin`
 
 ## Configuration
@@ -24,6 +24,6 @@ To filter the deployments of your account by Vercel Project fill the `App Name` 
 
 This plugin was based on the [Vercel Deploy for Strapi](https://market.strapi.io/plugins/strapi-plugin-vercel-deploy).
 
-<a href="https://github.com/eeeurico/vercel-deploy-wp/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=eeeurico/vercel-deploy-wp" />
+<a href="https://github.com/eeeurico/deploy-vercel/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=eeeurico/deploy-vercel" />
 </a>

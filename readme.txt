@@ -1,6 +1,6 @@
-=== Vercel Deploy WP ===
+=== Deploy to Vercel ===
 Author URI: https://github.com/eeeurico
-Plugin URI: https://github.com/eeeurico/vercel-deploy-wp
+Plugin URI: https://github.com/eeeurico/deploy-vercel
 Tags: vercel, deploy
 Requires at least: 5.0
 Tested up to: 6.4
@@ -22,7 +22,7 @@ Inspired by [Vercel Deploy for Strapi](https://market.strapi.io/plugins/strapi-p
 
 = More information =
 
-For more information visit the [Vercel Deploy WP](https://github.com/eeeurico/vercel-deploy-wp) on Github
+For more information visit the [Deploy to Vercel](https://github.com/eeeurico/deploy-vercel) on Github
 
 = Settings =
 
@@ -34,10 +34,10 @@ To filter the deployments of your account by Vercel Project fill the `App Name` 
 
 1. Go to `Plugins` in the Admin menu
 2. Click on the button `Add new`
-3. Search for `Vercel Deploy WP` and click 'Install Now' or click on the `upload` link to upload `vercel-deploy-wp.zip`
+3. Search for `Deploy to Vercel` and click 'Install Now' or click on the `upload` link to upload `deploy-vercel.zip`
 4. Click on `Activate plugin`
 
 == Changelog ==
 
 = 1.0.0: January 11, 2024 =
-* Birthday of Vercel Deploy WP
+* Birthday of Deploy to Vercel
