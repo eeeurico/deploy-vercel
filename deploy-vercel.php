@@ -5,13 +5,13 @@
  * @package       VDWP
  * @author        Eurico Sá Fernandes
  * @license       gplv2
- * @version       1.0.0
+ * @version       1.0.2
  *
  * @wordpress-plugin
  * Plugin Name:   Deploy to Vercel
  * Plugin URI:    https://github.com/eeeurico/deploy-vercel
  * Description:   Wordpress plugin to trigger and monitor a development on Vercel
- * Version:       1.0.0
+ * Version:       1.0.2
  * Author:        Eurico Sá Fernandes
  * Author URI:    https://github.com/eeeurico
  * Text Domain:   deploy-vercel
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 define( 'VDWP_NAME',			'Deploy to Vercel' );
 
 // Plugin version
-define( 'VDWP_VERSION',		'1.0.0' );
+define( 'VDWP_VERSION',		'1.0.2' );
 
 // Plugin Root File
 define( 'VDWP_PLUGIN_FILE',	__FILE__ );
