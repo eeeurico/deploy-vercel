@@ -96,7 +96,7 @@ class Deploy_Vercel_Settings{
 	public function add_options_page() {
 		add_submenu_page(
 			'vercel-deploy',
-			__( 'Vercel Deploy Settings', 'deploy-vercel' ),
+			__( 'Deploy to Vercel Settings', 'deploy-vercel' ),
 			__( 'Settings', 'deploy-vercel' ),
 			'manage_options',
 			'vercel-deploy-settings',
@@ -142,7 +142,7 @@ class Deploy_Vercel_Settings{
 
 		add_settings_section(
 			'vercel_deploy_settings_section', // id
-			__( 'Vercel Deploy Settings', 'deploy-vercel' ), // title
+			__( 'Deploy to Vercel Settings', 'deploy-vercel' ), // title
 			array( $this, 'vercel_deploy_settings_section_info' ), // callback
 			'vercel-deploy-settings-admin' // page
 		);

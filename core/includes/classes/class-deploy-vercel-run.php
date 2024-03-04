@@ -82,8 +82,8 @@ class Deploy_Vercel_Run{
 	 */
 	public function register_admin_page(){
 		add_menu_page(
-			__( 'Vercel Deploy', 'deploy-vercel' ),
-			__( 'Vercel Deploy', 'deploy-vercel' ),
+			__( 'Deploy to Vercel', 'deploy-vercel' ),
+			__( 'Deploy to Vercel', 'deploy-vercel' ),
 			'manage_options',
 			'vercel-deploy',
 			[ $this, 'render_verceldeploy_admin_page' ],
@@ -97,11 +97,11 @@ class Deploy_Vercel_Run{
 	 * @return void
 	 */
 	public function render_verceldeploy_admin_page() {
-		$admin_page_title = __( 'Vercel Deploy', 'deploy-vercel' );
+		$admin_page_title = __( 'Deploy to Vercel', 'deploy-vercel' );
 		$settings_api = get_option( 'vercel_deploy_settings' );
 		?>
 		<div class="wrap">
-			<vercel-deploy-app data-config='<?php echo json_encode( $settings_api ); ?>'></vercel-deploy-app>
+			<vercel-deploy-app data-config='<?php echo wp_json_encode( $settings_api ); ?>'></vercel-deploy-app>
 		</div>
 		<?php
 	}

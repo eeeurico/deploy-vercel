@@ -130,7 +130,7 @@ if ( ! class_exists( 'Deploy_Vercel' ) ) :
 		 * @return  void
 		 */
 		public function load_textdomain() {
-			load_plugin_textdomain( 'deploy-vercel', FALSE, dirname( plugin_basename( VDWP_PLUGIN_FILE ) ) . '/languages/' );
+			load_plugin_textdomain( 'deploy-vercel', "", dirname( plugin_basename( VDWP_PLUGIN_FILE ) ) . '/languages/' );
 		}
 
 	}

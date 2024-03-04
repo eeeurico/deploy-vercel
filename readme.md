@@ -17,7 +17,7 @@ To enable the plugin, you will need to create a [Deploy Hook](https://vercel.com
 
 ### Settings
 
-After you've created your deploy hook and account token, navigate to `Vercel Deploy -> Settings` in the WordPress admin menu and paste your Vercel Deploy hook URL and account token.
+After you've created your deploy hook and account token, navigate to `Deploy to Vecel -> Settings` in the WordPress admin menu and paste your Vercel Deploy hook URL and account token.
 To filter the deployments of your account by Vercel Project fill the `App Name` with the slug of the project and to filter by Team or Account fill the `Team ID` with the slug of the team or account. These values can be used in combination.
 
 ## Contributors & Credits

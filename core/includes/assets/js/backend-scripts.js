@@ -71,7 +71,7 @@ class VercelDeployApp extends HTMLElement {
   renderLayout() {
     return `
         <div class="vercel-deploy__header">
-            <h1 class="vercel-deploy__title">Vercel Deploy</h1>
+            <h1 class="vercel-deploy__title">Deploy to Vercel</h1>
             <div class="vercel-deploy__actions"></div>
         </div>
         <div class="vercel-deploy__content"></div>

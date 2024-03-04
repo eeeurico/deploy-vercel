@@ -5,7 +5,7 @@ Tags: vercel, deploy
 Requires at least: 5.0
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,7 @@ For more information visit the [Deploy to Vercel](https://github.com/eeeurico/de
 
 = Settings =
 
-After you've created your deploy hook and account token, navigate to `Vercel Deploy -> Settings` in the WordPress admin menu and paste your Vercel Deploy hook URL and account token.
+After you've created your deploy hook and account token, navigate to `Deploy to Vercel -> Settings` in the WordPress admin menu and paste your Vercel Deploy hook URL and account token.
 To filter the deployments of your account by Vercel Project fill the `App Name` with the slug of the project and to filter by Team or Account fill the `Team ID` with the slug of the team or account. These values can be used in combination.
 
 
@@ -39,5 +39,14 @@ To filter the deployments of your account by Vercel Project fill the `App Name` 
 
 == Changelog ==
 
-= 1.0.0: January 11, 2024 =
+= 1.0.3: March 4, 2024 =
+* Changes recommended by WordPress Plugin Directory team
+
+= 1.0.2: January 27, 2024 =
+* Change plugin name as recommended by WordPress Plugin Directory team
+
+= 1.0.1: January 15, 2024 =
+* Rename plugin
+
+= 1.0.0: January 15, 2024 =
 * Birthday of Deploy to Vercel
