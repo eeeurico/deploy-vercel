@@ -107,7 +107,6 @@ if ( ! class_exists( 'Deploy_Vercel' ) ) :
 		private function includes() {
 			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-deploy-vercel-helpers.php';
 			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-deploy-vercel-settings.php';
-
 			require_once VDWP_PLUGIN_DIR . 'core/includes/classes/class-deploy-vercel-run.php';
 		}
 

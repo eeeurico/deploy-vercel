@@ -282,26 +282,120 @@ if ("customElements" in window) {
   customElements.define("vercel-deploy-app", VercelDeployApp)
 }
 
-// class VercelDeploy {
-//     constructor() {
-//       this.init()
-//     }
+/**
+ * Add metabox to post type
+ */
 
-//     init() {
-//       var self = this,
-//         settings = window.vercelDeploy,
-//         deployButton = document.getElementById("vercel-deploy-button")
-//       console.log(settings)
+class VercelDeployMetaBox extends HTMLElement {
+  constructor() {
+    // Always call super first in constructor
+    super()
 
-//       if (!settings) {
-//         console.error("[vercel-deploy] Missing configuration")
-//         return
-//       }
-//     }
+    // states
+    this.state = {
+      config: {},
+      error: null,
+      loading: true,
+      revalidating: false,
+    }
+  }
+  // We'll create our web component here
 
-//   }/
+  /**
+   * Runs each time the element is appended to or moved in the DOM
+   */
+  connectedCallback() {
+    // Get the configuration from the data attribute
+    const config = this.getAttribute("data-config")
+    this.state.config = JSON.parse(config)
 
-//   // on page ready vanilla js
-//   document.addEventListener("DOMContentLoaded", () => {
-//     new VercelDeploy()
-//   })
+    const revalidateUrl = `${this.state.config.revalidation_url}?path=${this.state.config.path}&post_type=${this.state.config.post_type}`
+
+    // add deploy button
+    // this.innerHTML = `<a href="${revalidateUrl}" class="button button-primary" id="vercel-revalidate-button">Revalidate</a>`
+    this.innerHTML = `<button class="button button-primary" id="vercel-revalidate-button" data-url="${revalidateUrl}">Revalidate Page</button>`
+    // add events to button
+    this.addEvents()
+  }
+
+  /**
+   * Runs when the element is removed from the DOM
+   */
+  disconnectedCallback() {
+    console.log("disconnected", this)
+  }
+
+  /**
+   * Actions
+   */
+
+  addEvents() {
+    const revalidateButton = this.querySelector("#vercel-revalidate-button")
+    const revalidateUrl = revalidateButton.getAttribute("data-url")
+    if (!revalidateUrl) return console.error("Missing revalidate url")
+    revalidateButton.addEventListener("click", () => {
+      this.state.revalidating = true
+      this.setRevalidationBtnState()
+
+      this.runRevalidation(revalidateUrl).then(({ data, error }) => {
+        //  delay
+        setTimeout(() => {
+          if (error) {
+            this.state.revalidating = false
+            this.setRevalidationBtnState()
+            console.error("[vercel-deploy] Error while deploying -", error)
+            return
+          }
+
+          this.state.revalidating = false
+          this.setRevalidationBtnState()
+          console.log(`Revalidated. Response: ${JSON.stringify(data)}`)
+        }, 1000)
+      })
+    })
+  }
+
+  setRevalidationBtnState() {
+    const revalidateButton = this.querySelector("#vercel-revalidate-button")
+    if (this.state.revalidating) {
+      revalidateButton.classList.add("is-loading")
+      revalidateButton.setAttribute("disabled", true)
+      revalidateButton.innerHTML = "Revalidating..."
+    } else {
+      revalidateButton.classList.remove("is-loading")
+      revalidateButton.removeAttribute("disabled")
+      revalidateButton.innerHTML = "Revalidate"
+    }
+  }
+
+  async runRevalidation(revalidateUrl) {
+    try {
+      if (!revalidateUrl) {
+        throw "missing revalidate url"
+      }
+      const response = await fetch(revalidateUrl, {
+        method: "GET",
+      })
+
+      const data = await response.json()
+
+      if (data.error) {
+        throw new Error(data.error)
+      }
+
+      return {
+        data,
+      }
+    } catch (error) {
+      console.error("[vercel-deploy-meta-box] Error while deploying -", error)
+      return {
+        error: "An error occurred",
+      }
+    }
+  }
+}
+
+// Define the new web component
+if ("customElements" in window) {
+  customElements.define("vercel-deploy-meta-box", VercelDeployMetaBox)
+}

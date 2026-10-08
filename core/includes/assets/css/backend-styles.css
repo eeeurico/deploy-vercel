@@ -110,3 +110,16 @@ vercel-deploy-app .actions a:hover {
   color: #fff;
   border-color: #1d2327;
 }
+
+/**
+  * Revalidate Button
+  */
+vercel-deploy-meta-box {
+  display: block;
+  width: 100%;
+}
+
+vercel-deploy-meta-box .button {
+  width: 100%;
+  text-align: center;
+}
