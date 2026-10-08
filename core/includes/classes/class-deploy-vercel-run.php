@@ -47,7 +47,9 @@ class Deploy_Vercel_Run{
 	
 		add_action( 'admin_menu', [ $this, 'register_admin_page' ], 9 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_backend_scripts_and_styles' ), 20 );
-
+		
+		// add meta box to post type
+		add_action( 'add_meta_boxes', [ $this, 'register_meta_box' ] );
 	}
 
 	/**
@@ -103,6 +105,51 @@ class Deploy_Vercel_Run{
 		<div class="wrap">
 			<vercel-deploy-app data-config='<?php echo wp_json_encode( $settings_api ); ?>'></vercel-deploy-app>
 		</div>
+		<?php
+	}
+
+
+	/**
+	 * Register the meta box to the post type
+	 *
+	 * @return void
+	 */
+	public function register_meta_box(){
+		$post_types = apply_filters( 'VDWP/meta_box/post_types', [ 'post', 'page' ] );
+		$settings_api = get_option( 'vercel_deploy_settings' );
+		$hasRevalidationUrl = isset( $settings_api['revalidation_url'] ) && ! empty( $settings_api['revalidation_url'] );
+
+		if($hasRevalidationUrl) {
+			foreach ( $post_types as $post_type ) {
+				add_meta_box(
+					'vercel-deploy',
+					__( 'Deploy to Vercel', 'deploy-vercel' ),
+					[ $this, 'render_meta_box' ],
+					$post_type,
+					'side',
+					'high'
+				);
+			}
+		}
+	}
+
+	/**
+	 * Render the markup of the meta box
+	 *
+	 * @return void
+	 */
+	public function render_meta_box(){
+		$settings_api = get_option( 'vercel_deploy_settings' );
+		$post_ID = get_the_ID();
+
+		$config = [
+			'path' => str_replace(  get_site_url(), '', get_the_permalink( $post_ID ) ),
+			'post_type' => get_post_type( $post_ID ),
+			'revalidation_url' => $settings_api['revalidation_url']
+		];
+
+		?>
+		<vercel-deploy-meta-box data-config='<?php echo wp_json_encode( $config ); ?>'></vercel-deploy-meta-box>
 		<?php
 	}
 

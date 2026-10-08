@@ -5,7 +5,7 @@ Tags: vercel, deploy
 Requires at least: 5.0
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,10 @@ To filter the deployments of your account by Vercel Project fill the `App Name` 
 4. Click on `Activate plugin`
 
 == Changelog ==
+
+= 1.0.4 =
+* Add "Revalidate" meta box to posts and pages for on-demand revalidation of a Next.js frontend
+* Add Revalidation URL setting
 
 = 1.0.3: March 4, 2024 =
 * Changes recommended by WordPress Plugin Directory team

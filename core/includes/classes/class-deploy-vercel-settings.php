@@ -194,6 +194,26 @@ class Deploy_Vercel_Settings{
 				'id' => 'team_id',
 			)
 		);
+
+		add_settings_section(
+			'vercel_revalidation_settings_section', // id
+			__( 'Revalidation Settings', 'deploy-vercel' ), // title
+			'', // callback
+			'vercel-deploy-settings-admin' // page
+		);
+
+		add_settings_field(
+			'revalidation_url', // id
+			__('Revalidation Url', 'deploy-vercel'), // title
+			array( $this, 'textinput_callback'), // callback
+			'vercel-deploy-settings-admin', // page
+			'vercel_revalidation_settings_section', // section
+			array(
+				'description'  => __( 'Set the revalidatoin api endpoint in your NextJS application', 'deploy-vercel' ),
+				'id' => 'revalidation_url',
+			)
+		);
+		
 	}
 
 	public function vercel_deploy_settings_sanitize($input) {
@@ -212,6 +232,10 @@ class Deploy_Vercel_Settings{
 
 		if ( isset( $input['team_id'] ) ) {
 			$sanitary_values['team_id'] = sanitize_text_field( $input['team_id'] );
+		}
+
+		if ( isset( $input['revalidation_url'] ) ) {
+			$sanitary_values['revalidation_url'] = sanitize_text_field( $input['revalidation_url'] );
 		}
 
 		return $sanitary_values;
