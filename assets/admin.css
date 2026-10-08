@@ -1,0 +1,76 @@
+/* Deployments page */
+.deploy-vercel__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.deploy-vercel__header h1 {
+  margin-right: auto;
+}
+
+.deploy-vercel__notice .notice {
+  margin: 0 0 16px;
+}
+
+.deploy-vercel__table th:first-child {
+  width: 40%;
+}
+
+.deploy-vercel__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deploy-vercel__state::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #a7aaad;
+}
+
+.deploy-vercel__state--ready::before {
+  background: #00a32a;
+}
+
+.deploy-vercel__state--error::before,
+.deploy-vercel__state--canceled::before {
+  background: #d63638;
+}
+
+.deploy-vercel__state--queued::before,
+.deploy-vercel__state--initializing::before {
+  background: #dba617;
+}
+
+.deploy-vercel__state--building::before {
+  background: #2271b1;
+}
+
+.deploy-vercel__links a {
+  display: inline-block;
+  margin-right: 8px;
+  text-decoration: none;
+}
+
+/* Revalidate meta box */
+.deploy-vercel-revalidate .button {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.deploy-vercel-revalidate__status:empty {
+  display: none;
+}
+
+.deploy-vercel-revalidate__status.is-success {
+  color: #00a32a;
+}
+
+.deploy-vercel-revalidate__status.is-error {
+  color: #d63638;
+}
