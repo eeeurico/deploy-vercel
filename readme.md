@@ -1,28 +1,32 @@
 # Deploy to Vercel
 
-Wordpress plugin to trigger and monitor a deployment on [Vercel](https://vercel.com/).
+WordPress plugin to trigger and monitor deployments of a headless front end on [Vercel](https://vercel.com/), and to revalidate single Next.js pages from the post editor.
+
+Available on WordPress.org as [`deploy-vercel`](https://wordpress.org/plugins/deploy-vercel/). See [readme.txt](readme.txt) for the full documentation, FAQ (including an example Next.js revalidation route) and changelog.
+
+## Setup
+
+1. Create a [deploy hook](https://vercel.com/docs/deploy-hooks) for your Vercel project and an [access token](https://vercel.com/account/tokens).
+2. In WordPress, go to **Deploy to Vercel → Settings** and paste both. Optionally add the project name and team ID to filter the deployment list.
+3. For on-demand revalidation, set the **Revalidation URL** (e.g. `https://example.com/api/revalidate`) and, optionally, a **Revalidation secret** sent in the `x-revalidate-secret` header.
+
+The token, deploy hook and secret stay on the server: the admin UI talks to the plugin's REST routes (`deploy-vercel/v1`), and WordPress calls Vercel.
+
+## Development
+
+No build step. The plugin is plain PHP plus `assets/admin.js` and `assets/admin.css`.
+
+```
+deploy-vercel.php                          bootstrap and constants
+includes/class-deploy-vercel-settings.php  option, migration, settings page
+includes/class-deploy-vercel-api.php       REST routes and remote requests
+includes/class-deploy-vercel-admin.php     deployments page, meta box, assets
+uninstall.php                              removes the settings
+```
+
+## Credits
 
 Inspired by [Vercel Deploy for Strapi](https://market.strapi.io/plugins/strapi-plugin-vercel-deploy).
-
-## Installation
-
-1. Go to `Plugins` in the Admin menu
-2. Click on the button `Add new`
-3. Search for `Deploy to Vercel` and click 'Install Now' or click on the `upload` link to upload `deploy-vercel.zip`
-4. Click on `Activate plugin`
-
-## Configuration
-
-To enable the plugin, you will need to create a [Deploy Hook](https://vercel.com/docs/more/deploy-hooks) for your Vercel Project and [API Token](https://vercel.com/account/tokens) for your Vercel Account.
-
-### Settings
-
-After you've created your deploy hook and account token, navigate to `Deploy to Vecel -> Settings` in the WordPress admin menu and paste your Vercel Deploy hook URL and account token.
-To filter the deployments of your account by Vercel Project fill the `App Name` with the slug of the project and to filter by Team or Account fill the `Team ID` with the slug of the team or account. These values can be used in combination.
-
-## Contributors & Credits
-
-This plugin was based on the [Vercel Deploy for Strapi](https://market.strapi.io/plugins/strapi-plugin-vercel-deploy).
 
 <a href="https://github.com/eeeurico/deploy-vercel/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=eeeurico/deploy-vercel" />
