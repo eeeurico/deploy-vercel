@@ -1,5 +1,5 @@
 /**
- * Deploy to Vercel admin UI.
+ * Headless Deploy Panel for Vercel admin UI.
  *
  * All Vercel requests go through the plugin's REST routes; this file never
  * sees the API token or the deploy hook.
@@ -65,24 +65,24 @@
    * Deployments page.
    */
   function initDeploymentsPage(root) {
-    const button = root.querySelector(".deploy-vercel__deploy")
-    const list = root.querySelector(".deploy-vercel__deployments")
-    const notice = root.querySelector(".deploy-vercel__notice")
+    const button = root.querySelector(".headless-deploy-panel__deploy")
+    const list = root.querySelector(".headless-deploy-panel__deployments")
+    const notice = root.querySelector(".headless-deploy-panel__notice")
     if (!button || !list || !notice) return
 
     function renderDeployments(deployments) {
       if (!deployments.length) {
-        list.replaceChildren(el("p", "", __("No deployments found.", "deploy-vercel")))
+        list.replaceChildren(el("p", "", __("No deployments found.", "headless-deploy-panel-for-vercel")))
         return
       }
 
-      const table = el("table", "widefat striped deploy-vercel__table")
+      const table = el("table", "widefat striped headless-deploy-panel__table")
       const headRow = el("tr")
       ;[
-        __("Project", "deploy-vercel"),
-        __("State", "deploy-vercel"),
-        __("Created", "deploy-vercel"),
-        __("Links", "deploy-vercel"),
+        __("Project", "headless-deploy-panel-for-vercel"),
+        __("State", "headless-deploy-panel-for-vercel"),
+        __("Created", "headless-deploy-panel-for-vercel"),
+        __("Links", "headless-deploy-panel-for-vercel"),
       ].forEach((label) => headRow.appendChild(el("th", "", label)))
       table.appendChild(el("thead")).appendChild(headRow)
 
@@ -94,7 +94,7 @@
         const state = KNOWN_STATES.includes(deployment.state) ? deployment.state : "UNKNOWN"
         const stateCell = el("td")
         stateCell.appendChild(
-          el("span", "deploy-vercel__state deploy-vercel__state--" + state.toLowerCase(), deployment.state || "—")
+          el("span", "headless-deploy-panel__state headless-deploy-panel__state--" + state.toLowerCase(), deployment.state || "—")
         )
         row.appendChild(stateCell)
 
@@ -102,10 +102,10 @@
           el("td", "", deployment.created ? new Date(deployment.created).toLocaleString() : "—")
         )
 
-        const links = el("td", "deploy-vercel__links")
+        const links = el("td", "headless-deploy-panel__links")
         ;[
-          iconLink(deployment.url, "dashicons-admin-links", __("Open deployment", "deploy-vercel")),
-          iconLink(deployment.inspector_url, "dashicons-search", __("Open in Vercel", "deploy-vercel")),
+          iconLink(deployment.url, "dashicons-admin-links", __("Open deployment", "headless-deploy-panel-for-vercel")),
+          iconLink(deployment.inspector_url, "dashicons-search", __("Open in Vercel", "headless-deploy-panel-for-vercel")),
         ].forEach((link) => link && links.appendChild(link))
         row.appendChild(links)
 
@@ -117,7 +117,7 @@
     }
 
     function loadDeployments() {
-      return apiFetch({ path: "/deploy-vercel/v1/deployments" }).then((data) => {
+      return apiFetch({ path: "/headless-deploy-panel/v1/deployments" }).then((data) => {
         const deployments = Array.isArray(data.deployments) ? data.deployments : []
         renderDeployments(deployments)
         return deployments
@@ -127,7 +127,7 @@
     function setDeploying(deploying) {
       button.disabled = deploying
       button.classList.toggle("is-busy", deploying)
-      button.textContent = deploying ? __("Deploying…", "deploy-vercel") : __("Deploy", "deploy-vercel")
+      button.textContent = deploying ? __("Deploying…", "headless-deploy-panel-for-vercel") : __("Deploy", "headless-deploy-panel-for-vercel")
     }
 
     /**
@@ -149,30 +149,30 @@
 
             if (!deployment) {
               if (elapsed > APPEAR_TIMEOUT) {
-                finish("warning", __("The deployment has not appeared yet. Vercel may still be queueing it; reload this page later.", "deploy-vercel"))
+                finish("warning", __("The deployment has not appeared yet. Vercel may still be queueing it; reload this page later.", "headless-deploy-panel-for-vercel"))
                 return
               }
-              showNotice(notice, "info", __("Deployment triggered. Waiting for Vercel to start it…", "deploy-vercel"))
+              showNotice(notice, "info", __("Deployment triggered. Waiting for Vercel to start it…", "headless-deploy-panel-for-vercel"))
               setTimeout(poll, POLL_INTERVAL)
               return
             }
 
             if (PENDING_STATES.includes(deployment.state)) {
               if (elapsed > BUILD_TIMEOUT) {
-                finish("warning", __("The deployment is taking a long time. Reload this page to check on it.", "deploy-vercel"))
+                finish("warning", __("The deployment is taking a long time. Reload this page to check on it.", "headless-deploy-panel-for-vercel"))
                 return
               }
               /* translators: %s: deployment state, e.g. BUILDING. */
-              showNotice(notice, "info", sprintf(__("Deployment in progress (%s)…", "deploy-vercel"), deployment.state))
+              showNotice(notice, "info", sprintf(__("Deployment in progress (%s)…", "headless-deploy-panel-for-vercel"), deployment.state))
               setTimeout(poll, POLL_INTERVAL)
               return
             }
 
             if (deployment.state === "READY") {
-              finish("success", __("Deployment finished.", "deploy-vercel"))
+              finish("success", __("Deployment finished.", "headless-deploy-panel-for-vercel"))
             } else {
               /* translators: %s: deployment state, e.g. ERROR. */
-              finish("error", sprintf(__("Deployment ended with state %s.", "deploy-vercel"), deployment.state))
+              finish("error", sprintf(__("Deployment ended with state %s.", "headless-deploy-panel-for-vercel"), deployment.state))
             }
           })
           .catch((error) => finish("error", error.message))
@@ -183,9 +183,9 @@
 
     button.addEventListener("click", () => {
       setDeploying(true)
-      showNotice(notice, "info", __("Triggering deployment…", "deploy-vercel"))
+      showNotice(notice, "info", __("Triggering deployment…", "headless-deploy-panel-for-vercel"))
 
-      apiFetch({ path: "/deploy-vercel/v1/deploy", method: "POST" })
+      apiFetch({ path: "/headless-deploy-panel/v1/deploy", method: "POST" })
         .then((job) => waitForDeployment(job.created_at || Date.now()))
         .catch((error) => {
           showNotice(notice, "error", error.message)
@@ -208,26 +208,26 @@
    * "Revalidate" meta box on edit screens.
    */
   function initRevalidateBox(box) {
-    const button = box.querySelector(".deploy-vercel-revalidate__button")
-    const status = box.querySelector(".deploy-vercel-revalidate__status")
+    const button = box.querySelector(".headless-deploy-panel-revalidate__button")
+    const status = box.querySelector(".headless-deploy-panel-revalidate__status")
     const postId = parseInt(box.dataset.postId, 10)
     if (!button || !status || !postId) return
 
     button.addEventListener("click", () => {
       button.disabled = true
       button.classList.add("is-busy")
-      status.className = "deploy-vercel-revalidate__status"
-      status.textContent = __("Revalidating…", "deploy-vercel")
+      status.className = "headless-deploy-panel-revalidate__status"
+      status.textContent = __("Revalidating…", "headless-deploy-panel-for-vercel")
 
       apiFetch({
-        path: "/deploy-vercel/v1/revalidate",
+        path: "/headless-deploy-panel/v1/revalidate",
         method: "POST",
         data: { post_id: postId },
       })
         .then((result) => {
           status.classList.add("is-success")
           /* translators: %s: path of the page, e.g. /about/. */
-          status.textContent = sprintf(__("Revalidated %s", "deploy-vercel"), result.path)
+          status.textContent = sprintf(__("Revalidated %s", "headless-deploy-panel-for-vercel"), result.path)
         })
         .catch((error) => {
           status.classList.add("is-error")
@@ -241,8 +241,8 @@
   }
 
   function init() {
-    document.querySelectorAll(".deploy-vercel").forEach(initDeploymentsPage)
-    document.querySelectorAll(".deploy-vercel-revalidate").forEach(initRevalidateBox)
+    document.querySelectorAll(".headless-deploy-panel").forEach(initDeploymentsPage)
+    document.querySelectorAll(".headless-deploy-panel-revalidate").forEach(initRevalidateBox)
   }
 
   if (document.readyState === "loading") {
