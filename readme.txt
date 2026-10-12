@@ -1,10 +1,10 @@
-=== Deploy to Vercel ===
+=== Headless Deploy Panel for Vercel ===
 Contributors: eeeurico
 Tags: vercel, deploy, headless, nextjs, revalidate
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Trigger and monitor Vercel deployments of your headless front end, and revalidat
 
 == Description ==
 
-Deploy to Vercel is for sites that use WordPress as a headless CMS with a front end hosted on [Vercel](https://vercel.com/).
+Headless Deploy Panel for Vercel is for sites that use WordPress as a headless CMS with a front end hosted on [Vercel](https://vercel.com/).
 
 * **Deploy:** start a new deployment with one click, using a Vercel deploy hook.
 * **Monitor:** see your latest deployments and their state, updated while a deployment is running.
@@ -26,11 +26,11 @@ Inspired by [Vercel Deploy for Strapi](https://market.strapi.io/plugins/strapi-p
 
 == Installation ==
 
-1. Install and activate the plugin from **Plugins → Add New**, or upload the `deploy-vercel` folder to `/wp-content/plugins/`.
+1. Install and activate the plugin from **Plugins → Add New**, or upload the `headless-deploy-panel-for-vercel` folder to `/wp-content/plugins/`.
 2. In Vercel, create a [deploy hook](https://vercel.com/docs/deploy-hooks) for your project and an [access token](https://vercel.com/account/tokens).
-3. Go to **Deploy to Vercel → Settings**, paste the deploy hook URL and the token, and save.
+3. Go to **Deploy Panel → Settings**, paste the deploy hook URL and the token, and save.
 4. Optionally fill in the project name and team ID to only list that project's deployments.
-5. Go to **Deploy to Vercel** and click **Deploy**.
+5. Go to **Deploy Panel** and click **Deploy**.
 
 Only administrators (users who can manage options) can see deployments and start them. Anyone who can edit a post can revalidate it.
 
@@ -79,10 +79,10 @@ Set `REVALIDATE_SECRET` in your Vercel project to the same value as the plugin's
 
 = Can I show the revalidate box on custom post types? =
 
-Yes, with the `deploy_vercel_meta_box_post_types` filter:
+Yes, with the `headless_deploy_panel_meta_box_post_types` filter:
 
 `
-add_filter( 'deploy_vercel_meta_box_post_types', function ( $post_types ) {
+add_filter( 'headless_deploy_panel_meta_box_post_types', function ( $post_types ) {
 	$post_types[] = 'product';
 	return $post_types;
 } );
@@ -101,7 +101,7 @@ This plugin connects to the following services. Nothing is sent until an adminis
 Used to list the latest deployments of your Vercel account or team.
 
 * **What is sent:** your API token (as an `Authorization` header) and, if set, the project name and team ID.
-* **When:** when an administrator opens the **Deploy to Vercel** page, and every few seconds while a deployment started from that page is running.
+* **When:** when an administrator opens the **Deploy Panel** page, and every few seconds while a deployment started from that page is running.
 * **Endpoint:** `https://api.vercel.com/v6/deployments`
 
 = Vercel deploy hook =
@@ -121,6 +121,11 @@ Used for on-demand revalidation of your own front end, at the URL you entered in
 * **When:** only when a user clicks **Revalidate page** on a published post.
 
 == Changelog ==
+
+= 1.2.0 =
+* Renamed from "Deploy to Vercel" to "Headless Deploy Panel for Vercel", as requested by the WordPress.org Plugins Team. The admin menu is now called "Deploy Panel".
+* Changed: the settings option is now `headless_deploy_panel_settings`. Settings from earlier versions are migrated automatically.
+* Changed: the meta box filter is now `headless_deploy_panel_meta_box_post_types`.
 
 = 1.1.0 =
 * Security: the API token and deploy hook are no longer sent to the browser. All requests to Vercel are made by WordPress through new REST endpoints.
@@ -149,6 +154,9 @@ Used for on-demand revalidation of your own front end, at the URL you entered in
 * First release.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+The plugin is now called "Headless Deploy Panel for Vercel". Settings from earlier versions are migrated automatically.
 
 = 1.1.0 =
 Security update: your Vercel token and deploy hook are no longer exposed in the browser. Settings are migrated automatically. If your revalidation endpoint should only accept WordPress, set a revalidation secret.

@@ -2,7 +2,7 @@
 /**
  * Admin screens: the deployments page and the "Revalidate" meta box.
  *
- * @package Deploy_Vercel
+ * @package Headless_Deploy_Panel
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Renders the admin UI and loads its assets only where it is used.
  */
-class Deploy_Vercel_Admin {
+class Headless_Deploy_Panel_Admin {
 
-	const PAGE   = 'deploy-vercel';
-	const HANDLE = 'deploy-vercel-admin';
+	const PAGE   = 'headless-deploy-panel';
+	const HANDLE = 'headless-deploy-panel-admin';
 
 	/**
 	 * Hook suffix of the deployments page.
@@ -34,12 +34,12 @@ class Deploy_Vercel_Admin {
 	}
 
 	/**
-	 * Add the top-level "Deploy to Vercel" page.
+	 * Add the top-level "Deployments" page.
 	 */
 	public function add_page() {
 		$this->hook_suffix = (string) add_menu_page(
-			__( 'Deploy to Vercel', 'deploy-vercel' ),
-			__( 'Deploy to Vercel', 'deploy-vercel' ),
+			__( 'Headless Deploy Panel', 'headless-deploy-panel-for-vercel' ),
+			__( 'Deploy Panel', 'headless-deploy-panel-for-vercel' ),
 			'manage_options',
 			self::PAGE,
 			array( $this, 'render_page' ),
@@ -58,7 +58,7 @@ class Deploy_Vercel_Admin {
 		 *
 		 * @param string[] $post_types Post type names. Default post and page.
 		 */
-		return (array) apply_filters( 'deploy_vercel_meta_box_post_types', array( 'post', 'page' ) );
+		return (array) apply_filters( 'headless_deploy_panel_meta_box_post_types', array( 'post', 'page' ) );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Deploy_Vercel_Admin {
 	 * @return bool
 	 */
 	private function shows_meta_box( $post_type ) {
-		return '' !== Deploy_Vercel_Settings::get( 'revalidation_url' )
+		return '' !== Headless_Deploy_Panel_Settings::get( 'revalidation_url' )
 			&& in_array( $post_type, $this->meta_box_post_types(), true );
 	}
 
@@ -83,8 +83,8 @@ class Deploy_Vercel_Admin {
 		}
 
 		add_meta_box(
-			'deploy-vercel-revalidate',
-			__( 'Deploy to Vercel', 'deploy-vercel' ),
+			'headless-deploy-panel-revalidate',
+			__( 'Revalidation', 'headless-deploy-panel-for-vercel' ),
 			array( $this, 'render_meta_box' ),
 			$post_type,
 			'side',
@@ -110,9 +110,9 @@ class Deploy_Vercel_Admin {
 			return;
 		}
 
-		wp_enqueue_style( self::HANDLE, DEPLOY_VERCEL_URL . 'assets/admin.css', array(), DEPLOY_VERCEL_VERSION );
-		wp_enqueue_script( self::HANDLE, DEPLOY_VERCEL_URL . 'assets/admin.js', array( 'wp-api-fetch', 'wp-i18n' ), DEPLOY_VERCEL_VERSION, true );
-		wp_set_script_translations( self::HANDLE, 'deploy-vercel' );
+		wp_enqueue_style( self::HANDLE, HEADLESS_DEPLOY_PANEL_URL . 'assets/admin.css', array(), HEADLESS_DEPLOY_PANEL_VERSION );
+		wp_enqueue_script( self::HANDLE, HEADLESS_DEPLOY_PANEL_URL . 'assets/admin.js', array( 'wp-api-fetch', 'wp-i18n' ), HEADLESS_DEPLOY_PANEL_VERSION, true );
+		wp_set_script_translations( self::HANDLE, 'headless-deploy-panel-for-vercel' );
 	}
 
 	/**
@@ -123,25 +123,25 @@ class Deploy_Vercel_Admin {
 			return;
 		}
 
-		$configured = '' !== Deploy_Vercel_Settings::get( 'deploy_hook' ) && '' !== Deploy_Vercel_Settings::get( 'api_token' );
-		$settings   = admin_url( 'admin.php?page=' . Deploy_Vercel_Settings::PAGE );
+		$configured = '' !== Headless_Deploy_Panel_Settings::get( 'deploy_hook' ) && '' !== Headless_Deploy_Panel_Settings::get( 'api_token' );
+		$settings   = admin_url( 'admin.php?page=' . Headless_Deploy_Panel_Settings::PAGE );
 		?>
-		<div class="wrap deploy-vercel">
-			<div class="deploy-vercel__header">
+		<div class="wrap headless-deploy-panel">
+			<div class="headless-deploy-panel__header">
 				<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 				<?php if ( $configured ) : ?>
-					<button type="button" class="button button-primary deploy-vercel__deploy" disabled><?php esc_html_e( 'Deploy', 'deploy-vercel' ); ?></button>
+					<button type="button" class="button button-primary headless-deploy-panel__deploy" disabled><?php esc_html_e( 'Deploy', 'headless-deploy-panel-for-vercel' ); ?></button>
 				<?php endif; ?>
 			</div>
 
 			<?php if ( $configured ) : ?>
-				<div class="deploy-vercel__notice" aria-live="polite"></div>
-				<div class="deploy-vercel__deployments"><p><?php esc_html_e( 'Loading…', 'deploy-vercel' ); ?></p></div>
+				<div class="headless-deploy-panel__notice" aria-live="polite"></div>
+				<div class="headless-deploy-panel__deployments"><p><?php esc_html_e( 'Loading…', 'headless-deploy-panel-for-vercel' ); ?></p></div>
 			<?php else : ?>
 				<div class="notice notice-warning inline">
 					<p>
-						<?php esc_html_e( 'Add your Vercel deploy hook and API token to get started.', 'deploy-vercel' ); ?>
-						<a href="<?php echo esc_url( $settings ); ?>"><?php esc_html_e( 'Go to settings', 'deploy-vercel' ); ?></a>
+						<?php esc_html_e( 'Add your Vercel deploy hook and API token to get started.', 'headless-deploy-panel-for-vercel' ); ?>
+						<a href="<?php echo esc_url( $settings ); ?>"><?php esc_html_e( 'Go to settings', 'headless-deploy-panel-for-vercel' ); ?></a>
 					</p>
 				</div>
 			<?php endif; ?>
@@ -156,10 +156,10 @@ class Deploy_Vercel_Admin {
 	 */
 	public function render_meta_box( $post ) {
 		?>
-		<div class="deploy-vercel-revalidate" data-post-id="<?php echo esc_attr( (string) $post->ID ); ?>">
-			<p class="description"><?php esc_html_e( 'Refresh this page on the live site without a new deployment.', 'deploy-vercel' ); ?></p>
-			<button type="button" class="button deploy-vercel-revalidate__button"><?php esc_html_e( 'Revalidate page', 'deploy-vercel' ); ?></button>
-			<p class="deploy-vercel-revalidate__status" aria-live="polite"></p>
+		<div class="headless-deploy-panel-revalidate" data-post-id="<?php echo esc_attr( (string) $post->ID ); ?>">
+			<p class="description"><?php esc_html_e( 'Refresh this page on the live site without a new deployment.', 'headless-deploy-panel-for-vercel' ); ?></p>
+			<button type="button" class="button headless-deploy-panel-revalidate__button"><?php esc_html_e( 'Revalidate page', 'headless-deploy-panel-for-vercel' ); ?></button>
+			<p class="headless-deploy-panel-revalidate__status" aria-live="polite"></p>
 		</div>
 		<?php
 	}
