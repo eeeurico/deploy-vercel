@@ -3,7 +3,7 @@
  * REST endpoints. All requests to Vercel and to the revalidation URL are made
  * from the server, so the API token and deploy hook never reach the browser.
  *
- * @package Deploy_Vercel
+ * @package Headless_Deploy_Panel
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Registers the deploy-vercel/v1 REST routes.
+ * Registers the headless-deploy-panel/v1 REST routes.
  */
-class Deploy_Vercel_Api {
+class Headless_Deploy_Panel_Api {
 
-	const NAMESPACE_V1 = 'deploy-vercel/v1';
+	const NAMESPACE_V1 = 'headless-deploy-panel/v1';
 
 	/**
 	 * Register hooks.
@@ -92,20 +92,20 @@ class Deploy_Vercel_Api {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function get_deployments() {
-		$token = Deploy_Vercel_Settings::get( 'api_token' );
+		$token = Headless_Deploy_Panel_Settings::get( 'api_token' );
 
 		if ( '' === $token ) {
-			return new WP_Error( 'deploy_vercel_missing_token', __( 'Add your Vercel API token in the plugin settings.', 'deploy-vercel' ), array( 'status' => 400 ) );
+			return new WP_Error( 'headless_deploy_panel_missing_token', __( 'Add your Vercel API token in the plugin settings.', 'headless-deploy-panel-for-vercel' ), array( 'status' => 400 ) );
 		}
 
 		$query = array( 'limit' => 20 );
 
-		if ( '' !== Deploy_Vercel_Settings::get( 'app_name' ) ) {
-			$query['app'] = Deploy_Vercel_Settings::get( 'app_name' );
+		if ( '' !== Headless_Deploy_Panel_Settings::get( 'app_name' ) ) {
+			$query['app'] = Headless_Deploy_Panel_Settings::get( 'app_name' );
 		}
 
-		if ( '' !== Deploy_Vercel_Settings::get( 'team_id' ) ) {
-			$query['teamId'] = Deploy_Vercel_Settings::get( 'team_id' );
+		if ( '' !== Headless_Deploy_Panel_Settings::get( 'team_id' ) ) {
+			$query['teamId'] = Headless_Deploy_Panel_Settings::get( 'team_id' );
 		}
 
 		$body = $this->request(
@@ -142,10 +142,10 @@ class Deploy_Vercel_Api {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function deploy() {
-		$hook = Deploy_Vercel_Settings::get( 'deploy_hook' );
+		$hook = Headless_Deploy_Panel_Settings::get( 'deploy_hook' );
 
 		if ( '' === $hook ) {
-			return new WP_Error( 'deploy_vercel_missing_hook', __( 'Add your Vercel deploy hook in the plugin settings.', 'deploy-vercel' ), array( 'status' => 400 ) );
+			return new WP_Error( 'headless_deploy_panel_missing_hook', __( 'Add your Vercel deploy hook in the plugin settings.', 'headless-deploy-panel-for-vercel' ), array( 'status' => 400 ) );
 		}
 
 		$body = $this->request( 'POST', $hook );
@@ -155,7 +155,7 @@ class Deploy_Vercel_Api {
 		}
 
 		if ( empty( $body['job']['id'] ) ) {
-			return new WP_Error( 'deploy_vercel_no_job', __( 'Vercel did not start a deployment. Check the deploy hook URL.', 'deploy-vercel' ), array( 'status' => 502 ) );
+			return new WP_Error( 'headless_deploy_panel_no_job', __( 'Vercel did not start a deployment. Check the deploy hook URL.', 'headless-deploy-panel-for-vercel' ), array( 'status' => 502 ) );
 		}
 
 		return rest_ensure_response(
@@ -173,15 +173,15 @@ class Deploy_Vercel_Api {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function revalidate( $request ) {
-		$url  = Deploy_Vercel_Settings::get( 'revalidation_url' );
+		$url  = Headless_Deploy_Panel_Settings::get( 'revalidation_url' );
 		$post = get_post( (int) $request['post_id'] );
 
 		if ( '' === $url ) {
-			return new WP_Error( 'deploy_vercel_missing_url', __( 'Add the revalidation URL in the plugin settings.', 'deploy-vercel' ), array( 'status' => 400 ) );
+			return new WP_Error( 'headless_deploy_panel_missing_url', __( 'Add the revalidation URL in the plugin settings.', 'headless-deploy-panel-for-vercel' ), array( 'status' => 400 ) );
 		}
 
 		if ( ! $post || 'publish' !== $post->post_status ) {
-			return new WP_Error( 'deploy_vercel_not_published', __( 'Only published content can be revalidated.', 'deploy-vercel' ), array( 'status' => 400 ) );
+			return new WP_Error( 'headless_deploy_panel_not_published', __( 'Only published content can be revalidated.', 'headless-deploy-panel-for-vercel' ), array( 'status' => 400 ) );
 		}
 
 		$path  = self::get_post_path( $post );
@@ -191,7 +191,7 @@ class Deploy_Vercel_Api {
 		);
 
 		$headers = array();
-		$secret  = Deploy_Vercel_Settings::get( 'revalidation_secret' );
+		$secret  = Headless_Deploy_Panel_Settings::get( 'revalidation_secret' );
 
 		if ( '' !== $secret ) {
 			$headers['x-revalidate-secret'] = $secret;
@@ -247,7 +247,7 @@ class Deploy_Vercel_Api {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			return new WP_Error( 'deploy_vercel_http', $response->get_error_message(), array( 'status' => 502 ) );
+			return new WP_Error( 'headless_deploy_panel_http', $response->get_error_message(), array( 'status' => 502 ) );
 		}
 
 		$code = (int) wp_remote_retrieve_response_code( $response );
@@ -258,10 +258,10 @@ class Deploy_Vercel_Api {
 			$message = isset( $body['error']['message'] ) ? $body['error']['message'] : ( isset( $body['message'] ) ? $body['message'] : '' );
 
 			return new WP_Error(
-				'deploy_vercel_http',
+				'headless_deploy_panel_http',
 				sprintf(
 					/* translators: 1: HTTP status code, 2: error message returned by the remote server. */
-					__( 'The request failed with status %1$d. %2$s', 'deploy-vercel' ),
+					__( 'The request failed with status %1$d. %2$s', 'headless-deploy-panel-for-vercel' ),
 					$code,
 					is_string( $message ) ? sanitize_text_field( $message ) : ''
 				),
