@@ -30,6 +30,6 @@ uninstall.php                                      removes the settings
 
 Inspired by [Vercel Deploy for Strapi](https://market.strapi.io/plugins/strapi-plugin-vercel-deploy).
 
-<a href="https://github.com/eeeurico/deploy-vercel/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=eeeurico/deploy-vercel" />
+<a href="https://github.com/eeeurico/headless-deploy-panel-for-vercel/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=eeeurico/headless-deploy-panel-for-vercel" />
 </a>
