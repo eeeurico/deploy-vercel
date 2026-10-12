@@ -120,6 +120,13 @@ Used for on-demand revalidation of your own front end, at the URL you entered in
 * **What is sent:** the path and post type of the post, and the revalidation secret (as an `x-revalidate-secret` header) if you set one.
 * **When:** only when a user clicks **Revalidate page** on a published post.
 
+== Screenshots ==
+
+1. The Deploy Panel lists your latest Vercel deployments and their state.
+2. After you click Deploy, the panel follows the new deployment until it is ready.
+3. The Revalidate box on posts and pages refreshes that page on your Next.js site.
+4. Settings. The deploy hook, API token and revalidation secret are never shown again after saving.
+
 == Changelog ==
 
 = 1.2.1 =
