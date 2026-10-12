@@ -4,7 +4,7 @@ Tags: vercel, deploy, headless, nextjs, revalidate
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,7 +90,7 @@ add_filter( 'headless_deploy_panel_meta_box_post_types', function ( $post_types 
 
 = Where is the source code? =
 
-On [GitHub](https://github.com/eeeurico/deploy-vercel). Issues and pull requests are welcome.
+On [GitHub](https://github.com/eeeurico/headless-deploy-panel-for-vercel). Issues and pull requests are welcome.
 
 == External services ==
 
@@ -121,6 +121,9 @@ Used for on-demand revalidation of your own front end, at the URL you entered in
 * **When:** only when a user clicks **Revalidate page** on a published post.
 
 == Changelog ==
+
+= 1.2.1 =
+* The GitHub repository is now github.com/eeeurico/headless-deploy-panel-for-vercel, to match the new name.
 
 = 1.2.0 =
 * Renamed from "Deploy to Vercel" to "Headless Deploy Panel for Vercel", as requested by the WordPress.org Plugins Team. The admin menu is now called "Deploy Panel".
